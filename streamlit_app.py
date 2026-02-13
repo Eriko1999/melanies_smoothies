@@ -8,7 +8,7 @@ st.title(":cup_with_straw: Customize Your Smoothie! :cup_with_straw:")
 # --- Snowflake接続 ---
 @st.cache_resource
 def create_session():
-    return session = Session.builder.getOrCreate()
+    return Session.builder.getOrCreate()
 
 session = create_session()
 
@@ -26,7 +26,7 @@ my_dataframe = (
 #Convert the Snowflake Dataframe to a Pandas Dataframe so we can use the LOC Function
 pd_df=my_dataframe.to_pandas()
 st.dataframe(pd_df)
-st.stop
+st.stop()
 
 ingredients_list = st.multiselect(
     "Choose up to 5 ingredients:",
@@ -49,7 +49,7 @@ if ingredients_list:
         for fruit_chosen in ingredients_list:
         
             search_value = my_dataframe.loc[
-                my_dataframe["FRUIT_NAME"] == fruit_chosen,
+                pd_df["FRUIT_NAME"] == fruit_chosen,
                 "SEARCH_ON"
             ].values[0]
         
