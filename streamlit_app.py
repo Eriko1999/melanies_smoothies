@@ -40,12 +40,19 @@ if ingredients_list:
 
         # 🔹 API部分
         for fruit_chosen in ingredients_list:
-
-    search_value = my_dataframe.loc[
-        my_dataframe["FRUIT_NAME"] == fruit_chosen,
-        "SEARCH_ON"
-    ].values[0]
-
-    smoothiefroot_response = requests.get(
-        "https://my.smoothiefroot.com/api/fruit/" + search_value
-    )
+        
+            search_value = my_dataframe.loc[
+                my_dataframe["FRUIT_NAME"] == fruit_chosen,
+                "SEARCH_ON"
+            ].values[0]
+        
+            st.subheader(fruit_chosen + " Nutrition Information")
+        
+            smoothiefroot_response = requests.get(
+                "https://my.smoothiefroot.com/api/fruit/" + search_value
+            )
+        
+            st.dataframe(
+                smoothiefroot_response.json(),
+                use_container_width=True,
+            )
