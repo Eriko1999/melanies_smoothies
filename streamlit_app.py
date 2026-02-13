@@ -8,7 +8,7 @@ st.title(":cup_with_straw: Customize Your Smoothie! :cup_with_straw:")
 # --- Snowflake接続 ---
 @st.cache_resource
 def create_session():
-    return Session.builder.configs(st.secrets["snowflake"]).create()
+    return session = Session.builder.getOrCreate()
 
 session = create_session()
 
