@@ -76,10 +76,11 @@ if ingredients_list:
             "insert into smoothies.public.orders(ingredients, name_on_order) values (?, ?)",
             params=[ingredients_string, name_on_order],
         ).collect()
-        
+
         st.success("Your Smoothie is ordered!", icon="✅")
 
-         for fruit_chosen in ingredients_list:
+        # 🔹 ここからAPI部分
+        for fruit_chosen in ingredients_list:
             st.subheader(fruit_chosen + " Nutrition Information")
 
             smoothiefroot_response = requests.get(
@@ -87,8 +88,7 @@ if ingredients_list:
             )
 
             st.dataframe(
-                data=smoothiefroot_response.json(),
+                smoothiefroot_response.json(),
                 use_container_width=True,
             )
-
 
