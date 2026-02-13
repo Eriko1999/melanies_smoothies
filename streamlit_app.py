@@ -17,7 +17,7 @@ name_on_order = st.text_input("Name on Smoothie:")
 
 my_dataframe = (
     session.table("smoothies.public.fruit_options")
-    .select(col("FRUIT_NAME"))
+    .select(col("FRUIT_NAME"), col("SEARCH_ON"))
     .to_pandas()
 )
 
@@ -40,13 +40,12 @@ if ingredients_list:
 
         # 🔹 API部分
         for fruit_chosen in ingredients_list:
-            st.subheader(fruit_chosen + " Nutrition Information")
 
-            smoothiefroot_response = requests.get(
-                "https://my.smoothiefroot.com/api/fruit/" + fruit_chosen
-            )
+    search_value = my_dataframe.loc[
+        my_dataframe["FRUIT_NAME"] == fruit_chosen,
+        "SEARCH_ON"
+    ].values[0]
 
-            st.dataframe(
-                smoothiefroot_response.json(),
-                use_container_width=True,
-            )
+    smoothiefroot_response = requests.get(
+        "https://my.smoothiefroot.com/api/fruit/" + search_value
+    )
